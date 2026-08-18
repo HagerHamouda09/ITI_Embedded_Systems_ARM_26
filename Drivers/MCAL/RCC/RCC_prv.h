@@ -68,4 +68,15 @@ typedef struct{
 #define RCC 				((volatile RCC_MemMap_t*)(RCC_BASE_ADDR))
 
 
+// SYSCLK OPTIONS
+#define HSE_CLK	1
+#define HSI_CLK	2
+#define PLL_CLK	3
+
+//BYPASS
+#define RC_CLK			0
+#define MECHANICAL_CLK	1
+
+
+
 #endif /* RCC_PRV_H_ */
