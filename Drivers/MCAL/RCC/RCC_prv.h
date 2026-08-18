@@ -77,6 +77,6 @@ typedef struct{
 #define RC_CLK			0
 #define MECHANICAL_CLK	1
 
-
+#define HSEBYP	18
 
 #endif /* RCC_PRV_H_ */

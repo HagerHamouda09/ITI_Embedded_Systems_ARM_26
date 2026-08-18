@@ -8,6 +8,17 @@
 #ifndef RCC_INT_H_
 #define RCC_INT_H_
 
+//buses
+#define	RCC_AHB1	0
+#define	RCC_AHB2	1
+#define	RCC_APB1	2
+#define	RCC_APB2	3
+
+// Per
+#define RCC_GPIOA	0
+#define RCC_GPIOB	1
+
+
 
 
 void MRCC_vInit(void);
