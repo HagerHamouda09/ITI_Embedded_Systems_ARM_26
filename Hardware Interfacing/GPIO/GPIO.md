@@ -17,7 +17,13 @@ int main(void)
     MRCC_vInit();
 
     /* 2. Enable GPIOA Clock on AHB1 Bus */
+    //M4
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /*
+     	M3 (BLUE PILL)
+      	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+    */
 
     /* 3. Configure PA0 as Output Push-Pull */
     GPIOx_PinConfig_t LED =
@@ -59,7 +65,15 @@ int main(void)
 int main(void)
 {
     MRCC_vInit();
+
+    //M4
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /*
+     	M3 (BLUE PILL)
+      	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+    */
+
 
     GPIOx_PinConfig_t LED =
     {
@@ -109,7 +123,14 @@ int main(void)
 int main(void)
 {
     MRCC_vInit();
+
+ //M4
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /*
+     	M3 (BLUE PILL)
+      	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+    */
 
     GPIOx_PinConfig_t LED =
     {
@@ -174,7 +195,14 @@ $$\text{OFF} \longrightarrow \text{RED} \longrightarrow \text{GREEN} \longrighta
 int main(void)
 {
     MRCC_vInit();
+
+    //M4
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /*
+     	M3 (BLUE PILL)
+      	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+    */
 
     GPIOx_PinConfig_t Red =
     {
@@ -311,7 +339,14 @@ u8 Sevensegment[] = {
 int main(void)
 {
     MRCC_vInit();
+
+    //M4
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /*
+     	M3 (BLUE PILL)
+      	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+    */
 
     GPIOx_PinConfig_t SegmentPins[] = {
         {GPIO_PORTA, GPIO_PIN0, GPIO_MODE_OUTPUT, GPIO_OT_PUSHPULL, GPIO_SPEED_LOW, GPIO_NO_PULL},
