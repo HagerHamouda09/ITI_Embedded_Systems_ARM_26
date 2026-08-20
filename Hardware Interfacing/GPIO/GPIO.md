@@ -1,4 +1,4 @@
-# GPIO Labs (STM32 RCC & GPIO Driver)
+# GPIO Labs (STM32f401 RCC & GPIO Driver)
 
 ### **Lab 1:** 
 
