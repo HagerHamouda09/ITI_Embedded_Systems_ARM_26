@@ -234,11 +234,11 @@ void MGPIO_vTogPinValue(u8 A_u8PortID, u8 A_u8PinNum)
 		TOG_BIT(GPIOA->ODR,A_u8PinNum);
 		break;
 	case GPIO_PORTB:
-		TOG_BIT(GPIOA->ODR,A_u8PinNum);
+		TOG_BIT(GPIOB->ODR,A_u8PinNum);
 		break;
 
 	case GPIO_PORTC:
-			TOG_BIT(GPIOA->ODR,A_u8PinNum);
+			TOG_BIT(GPIOC->ODR,A_u8PinNum);
 			break;
 	}
 
@@ -276,6 +276,117 @@ return L_u8Value;
 }
 
 
+void MGPIO_vSetAlt(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8AFx)
+{
+
+// LOW
+	if(A_u8PinNum < 8)
+	{
+		switch(A_u8PortID)
+		{
+		case GPIO_PORTA:
+			GPIOA->AFRL &= ~(0b1111 << (A_u8PinNum *4));
+			GPIOA->AFRL |= (A_u8AFx << (A_u8PinNum *4));
+			break;
+
+		case GPIO_PORTB:
+			GPIOB->AFRL &= ~(0b1111 << (A_u8PinNum *4));
+			GPIOB->AFRL |= (A_u8AFx << (A_u8PinNum *4));
+			break;
+
+		case GPIO_PORTC:
+			GPIOC->AFRL &= ~(0b1111 << (A_u8PinNum *4));
+			GPIOC->AFRL |= (A_u8AFx << (A_u8PinNum *4));
+			break;
+
+		}
+		//HIGH
+
+	}
+	else if(A_u8PinNum>=8 && A_u8PinNum<16)
+				{
+					switch(A_u8PortID)
+					{
+					case GPIO_PORTA:
+						GPIOA->AFRH &= ~(0b1111 << ((A_u8PinNum -8) *4));
+						GPIOA->AFRH |= (A_u8AFx << ((A_u8PinNum -8) *4));
+						break;
+
+					case GPIO_PORTB:
+						GPIOB->AFRH &= ~(0b1111 << ((A_u8PinNum -8) *4));
+						GPIOB->AFRH |= (A_u8AFx << ((A_u8PinNum -8) *4));
+						break;
+
+					case GPIO_PORTC:
+						GPIOC->AFRH &= ~(0b1111 << ((A_u8PinNum -8) *4));
+						GPIOC->AFRH |= (A_u8AFx << ((A_u8PinNum -8) *4));
+						break;
+
+					}
+}
+
+}
+
+
+void MGPIO_vSetPinValueAtomic(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8PinValue)
+{
+	if((A_u8PortID == GPIO_PORTA) && (A_u8PinNum == GPIO_PIN13 || A_u8PinNum == GPIO_PIN14 || A_u8PinNum == GPIO_PIN15))
+				{
+
+				}
+				else if((A_u8PortID == GPIO_PORTB) && (A_u8PinNum == GPIO_PIN3 || A_u8PinNum == GPIO_PIN4))
+				{
+
+				}
+				else
+				{
+					// SET
+					if(A_u8PinValue == GPIO_HIGH)
+					{
+						switch(A_u8PortID)
+						{
+						case GPIO_PORTA:
+							GPIOA->BSRR = 1<<(A_u8PinNum);
+							break;
+						case GPIO_PORTB:
+							GPIOB->BSRR = 1<<(A_u8PinNum);
+							break;
+
+						case GPIO_PORTC:
+							GPIOC->BSRR = 1<<(A_u8PinNum);
+							break;
+						}
+
+					}
+
+					else if(A_u8PinValue == GPIO_LOW)
+					{
+						switch(A_u8PortID)
+						{
+						case GPIO_PORTA:
+							GPIOA->BSRR = 1<<(A_u8PinNum+16);
+							break;
+						case GPIO_PORTB:
+							GPIOB->BSRR = 1<<(A_u8PinNum+16);
+							break;
+
+						case GPIO_PORTC:
+							GPIOC->BSRR = 1<<(A_u8PinNum+16);
+							break;
+						}
+
+					}
+
+				}
+}
+
+
+
+
+
+
+
+
 void MGPIO_vPinInit(GPIOx_PinConfig_t* A_xPinCfg)
 {
 MGPIO_vSetMode(A_xPinCfg->Port, A_xPinCfg->Pin,A_xPinCfg->Mode);
@@ -284,5 +395,7 @@ MGPIO_vSetOutputSpeed(A_xPinCfg->Port,A_xPinCfg->Pin, A_xPinCfg->Speed);
 MGPIO_vSetPullType(A_xPinCfg->Port,A_xPinCfg->Pin, A_xPinCfg->PullType);
 
 //ALTERNATE
+MGPIO_vSetAlt(A_xPinCfg->Port , A_xPinCfg->Pin, A_xPinCfg->AltFunc);
 }
+
 

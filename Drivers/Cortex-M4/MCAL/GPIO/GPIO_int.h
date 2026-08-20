@@ -77,6 +77,11 @@ void MGPIO_vSetOutputSpeed(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8OutputSpeed);
 
 void MGPIO_vSetPullType(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8PullType);
 
+void MGPIO_vSetAlt(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8AFx);
+
+
+
+
 void MGPIO_vSetPinValue(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8PinValue);
 
 void MGPIO_vSetPinValueAtomic(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8PinValue);
@@ -85,7 +90,6 @@ void MGPIO_vTogPinValue(u8 A_u8PortID, u8 A_u8PinNum);
 
 u8 MGPIO_u8GetPinValue(u8 A_u8PortID, u8 A_u8PinNum);
 
-void MGPIO_vSetAlt(u8 A_u8PortID, u8 A_u8PinNum, u8 A_u8AFx);
 
 
 #endif /* MCAL_GPIO_GPIO_INT_H_ */
