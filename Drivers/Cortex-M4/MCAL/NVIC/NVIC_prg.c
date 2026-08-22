@@ -49,7 +49,7 @@ void MNVIC_SetGroupPriority(NVIC_Group_t A_xGroupPriority)
 }
 
 //MNVIC_vSetPeripheralPriority(6,16,0)
-void MNVIC_vSetPeripheralPriority(A_u8Position, u8 A_u8Group, u8 A_u8SubGroup)
+void MNVIC_vSetPeripheralPriority(u8 A_u8Position, u8 A_u8Group, u8 A_u8SubGroup)
 {
 
 	switch(G_u8GroupPriority)

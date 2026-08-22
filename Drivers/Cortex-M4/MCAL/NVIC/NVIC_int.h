@@ -28,7 +28,7 @@ u8 MNVIC_vGetFlagStatus(u8 A_u8Position);
 
 void MNVIC_SetGroupPriority(NVIC_Group_t A_xGroupPriority);
 
-void MNVIC_vSetPeripheralPriority(A_u8Position, u8 A_u8Group, u8 A_u8SubGroup );
+void MNVIC_vSetPeripheralPriority(u8 A_u8Position, u8 A_u8Group, u8 A_u8SubGroup );
 
 
 
