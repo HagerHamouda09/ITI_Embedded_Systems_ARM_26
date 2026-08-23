@@ -51,13 +51,22 @@ void MNVIC_SetGroupPriority(NVIC_Group_t A_xGroupPriority)
 //MNVIC_vSetPeripheralPriority(6,16,0)
 void MNVIC_vSetPeripheralPriority(u8 A_u8Position, u8 A_u8Group, u8 A_u8SubGroup)
 {
-
 	switch(G_u8GroupPriority)
 	{
-	case Group0Sub16:
+	case Group16Sub0:
 		NVIC->IPRx[A_u8Position] = A_u8Group <<4;
 		break;
 	case Group8Sub2:
+		NVIC->IPRx[A_u8Position] = A_u8Group <<5 | A_u8SubGroup <<4;
+		break;
+	case Group4Sub4:
+		NVIC->IPRx[A_u8Position] = A_u8Group <<6 | A_u8SubGroup <<4;
+		break;
+	case Group2Sub8:
+		NVIC->IPRx[A_u8Position] = A_u8Group <<7 | A_u8SubGroup <<4;
+		break;
+	case Group0Sub16:
+		NVIC->IPRx[A_u8Position] = A_u8SubGroup <<4;
 		break;
 	}
 }
