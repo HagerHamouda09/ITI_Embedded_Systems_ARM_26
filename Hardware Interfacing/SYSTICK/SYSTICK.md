@@ -23,6 +23,9 @@ int main(void)
     MRCC_vInit();
     MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
 
+    //M3
+    //	MRCC_vEnableClk(RCC_APB2, RCC_GPIOA);
+
     /* 2. Configure SysTick: Polling Mode, Prescaler = AHB / 8 */
     MSYSTICK_Config_t STK_cfg = {
         .InterruptEnable = INT_DISABLE,
