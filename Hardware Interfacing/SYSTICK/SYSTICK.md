@@ -13,8 +13,6 @@ Write an ARM Cortex-M4 (STM32F4) C program to toggle an LED on pin `PA1` every *
 #include "../LIB/BIT_MATH.h"
 #include "../MCAL/RCC/RCC_int.h"
 #include "../MCAL/GPIO/GPIO_int.h"
-#include "../MCAL/NVIC/NVIC_int.h"
-#include "../MCAL/EXTI/EXTI_int.h"
 #include "../MCAL/SYSTICK/SYSTICK_int.h"
 
 int main(void)
