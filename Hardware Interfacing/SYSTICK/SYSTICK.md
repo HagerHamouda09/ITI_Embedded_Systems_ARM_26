@@ -58,3 +58,64 @@ int main(void)
 }
 
 ```
+---
+
+### **Lab 2:** Periodic Asynchronous LED Toggling via SysTick Interrupt
+Toggle an LED` periodically every **500 ms** using the **SysTick Timer Interrupt** (non-blocking periodic execution).
+
+
+**Code:**
+```c
+#include "../LIB/STD_TYPES.h"
+#include "../LIB/BIT_MATH.h"
+#include "../MCAL/RCC/RCC_int.h"
+#include "../MCAL/GPIO/GPIO_int.h"
+#include "../MCAL/SYSTICK/SYSTICK_int.h"
+
+void TogLed(void);
+
+int main(void)
+{
+    /* 1. Enable System Clock and GPIOA Clock on AHB1 */
+    MRCC_vInit();
+    MRCC_vEnableCLK(RCC_AHB1, RCC_GPIOA);
+
+    /* 2. Configure SysTick: Interrupt Enabled, Clock Source = AHB / 8 */
+    MSYSTICK_Config_t STK_cfg = {
+        .InterruptEnable = INT_ENABLE,
+        .CLK_SRC         = CLK_SRC_AHB_8
+    };
+    MSYSTICK_vInit(&STK_cfg);
+
+    /* 3. Configure PA1 as Output Push-Pull for LED */
+    GPIOx_PinConfig_t led =
+    {
+        .Port       = GPIO_PORTA,
+        .Pin        = GPIO_PIN1,
+        .Mode       = GPIO_MODE_OUTPUT,
+        .OutputType = GPIO_OT_PUSHPULL,
+        .Speed      = GPIO_SPEED_LOW,
+        .PullType   = GPIO_NO_PULL
+    };
+    MGPIO_vPinInit(&led);
+
+    /* 4. Start Periodic Interrupt every 500 ms with Callback */
+    MSYSTICK_vSetInterval_Multi(500, TogLed);
+
+    while(1)
+    {
+        // Non-blocking Super Loop
+    }
+
+    return 0;
+}
+
+/* ================= SysTick Callback Function ================= */
+
+void TogLed(void)
+{
+    /* Toggle LED on PA1 every 500 ms */
+    MGPIO_vTogPinValue(GPIO_PORTA, GPIO_PIN1);
+}
+
+```
