@@ -27,6 +27,7 @@ void MSYSTICK_vSetDelay_us(f64 A_f64Delay_us);
 void MSYSTICK_vSetIntervalSingle(u32 A_u32Delay_ms, void (*Fptr)(void));
 
 void MSYSTICK_vSetIntervalMulti(u32 A_u32Delay_ms, void (*Fptr)(void));
+void MSYSTICK_vSetIntervalMulti_us(u32 A_u32Delay_us, void (*Fptr)(void));
 
 
 #define INT_ENABLE	1

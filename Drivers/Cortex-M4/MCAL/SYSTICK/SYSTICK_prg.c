@@ -129,6 +129,21 @@ void MSYSTICK_vSetIntervalMulti(u32 A_u32Delay_ms, void (*Fptr)(void))
 
 }
 
+void MSYSTICK_vSetIntervalMulti_us(u32 A_u32Delay_us, void (*Fptr)(void))
+{
+    G_u8SingleFlag = 0;
+
+    u32 L_u32Ticks = (u32)(A_u32Delay_us * 3.125);
+
+    G_xFptr = Fptr;
+    SYSTICK->VAL = 0;
+
+    if((L_u32Ticks >= 1) && (L_u32Ticks < 0x00FFFFFF))
+    {
+        MSYSTICK_vStartTimer(L_u32Ticks);
+    }
+}
+
 
 void SysTick_Handler (void)
 {
