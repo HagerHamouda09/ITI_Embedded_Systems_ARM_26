@@ -27,7 +27,7 @@ u32 MSYSTICK_u32GetRemainingTime_SingleShot(void);
 
 void MSYSTICK_vSetInterval_Single(u32 A_u32Delay_ms, void(*A_xFptr)(void));
 void MSYSTICK_vSetInterval_Multi(u32 A_u32Delay_ms, void(*A_xFptr)(void));
-void MSYSTICK_vSetIntervalMulti_us(u32 A_u32Delay_us, void (*A_xFptr)(void))
+void MSYSTICK_vSetIntervalMulti_us(u32 A_u32Delay_us, void (*A_xFptr)(void));
 
 #define INT_ENABLE	1
 #define INT_DISABLE	0
