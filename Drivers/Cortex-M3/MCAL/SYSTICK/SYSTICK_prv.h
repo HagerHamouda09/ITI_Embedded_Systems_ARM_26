@@ -9,7 +9,7 @@
 #define MCAL_SYSTICK_SYSTICK_PRV_H_
 
 
-#define SYSTICK_BASE_ADDR	0xE000E010U
+#define SYSTICK_BASE_ADDR		0xE000E010U
 
 typedef struct{
 	u32 CTRL;
@@ -19,13 +19,13 @@ typedef struct{
 
 }SYSTICK_MemMap_t;
 
-#define SYSTICK	((volatile SYSTICK_MemMap_t*)(SYSTICK_BASE_ADDR))
+#define SYSTICK		((volatile SYSTICK_MemMap_t*)(SYSTICK_BASE_ADDR))
 
-
-#define ENABLE		0
-#define TICKINT		1
-#define CLKSOURCE	2
+/* Register bits */
 #define COUNTFLAG	16
+#define CLKSOURCE	2
+#define TICKINT		1
+#define ENABLE		0
 
 
 
