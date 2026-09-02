@@ -107,6 +107,9 @@ void APP_GET_TIME(void)
         /* Capture bit pulse duration in microseconds */
         G_u32Arr[G_u8Counter++] = MSYSTICK_u32GetElapsedTime_SingleShot() / 3.125;
 
+// M3
+//        G_u32Arr[G_u8Counter++] = MSYSTICK_u32GetElapsedTime_SingleShot();
+
         /* Rearm timeout for the next incoming bit */
         MSYSTICK_vSetIntervalSingle(4, APP_DecodeBits);
     }
