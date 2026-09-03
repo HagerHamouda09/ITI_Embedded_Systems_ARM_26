@@ -11,7 +11,7 @@
 
 void MSPI_vInit(void);
 
-u8 MSPI_vTransceive(u8 A_u8Data);
+u8 MSPI_u8Transceive(u8 A_u8Data);
 
 
 #endif /* MCAL_SPI_SPI_INT_H_ */

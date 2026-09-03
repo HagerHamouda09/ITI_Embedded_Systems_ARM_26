@@ -38,7 +38,7 @@ void MSPI_vInit(void)
 
 
 
-u8 MSPI_vTransceive(u8 A_u8Data)
+u8 MSPI_u8Transceive(u8 A_u8Data)
 {
 	while(!GET_BIT(SPI1->SR, TXE));
 	SPI1->DR =A_u8Data;
