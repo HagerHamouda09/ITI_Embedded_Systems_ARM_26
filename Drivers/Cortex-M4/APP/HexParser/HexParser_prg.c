@@ -87,7 +87,7 @@ u16 Data[10]={0};
 
 // 0123
 // 0D90
-// littleindian ->90 ->LOWER MEMLOCATION
+// little endian ->90 ->LOWER MEMLOCATION
 //				-> 0D -> HIGHER MEM LOCATION
 
 for(u8 i=0; i< (CC/2); i++)
