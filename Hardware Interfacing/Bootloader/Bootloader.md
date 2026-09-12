@@ -1,4 +1,4 @@
-#  ARM Session 19 Labs (Bootloader: Full Firmware Flashing & Vector Table Jump)
+#  (Bootloader: Full Firmware Flashing)
 
 #  Firmware Generation Pipeline (Linker Relocation & HEX Conversion)
 
