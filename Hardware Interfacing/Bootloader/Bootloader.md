@@ -1,5 +1,24 @@
 #  ARM Session 19 Labs (Bootloader: Full Firmware Flashing & Vector Table Jump)
 
+#  Firmware Generation Pipeline (Linker Relocation & HEX Conversion)
+
+The firmware array (`arr`) included in `out.h` is generated from a separate user application (such as a test program that turns an LED ON via `PA0`) through a specialized compilation and conversion workflow.
+
+### **Pipeline Workflow:**
+
+* **Linker Script Relocation (`.ld`):** The application project's linker script is modified so that the flash origin starts at `0x08008000` (matching Sector 2 on STM32F4 or Page 32 on STM32F103). The available flash size is reduced by subtracting the bootloader's reserved offset (e.g., subtracting $32\text{ KB}$, leaving $224\text{ KB}$ for standard M4 builds).
+* **Binary Compilation & Hex Export:** Compiling this relocated project produces an Intel HEX file (`testled.hex`) containing the application's machine code mapped to its new memory boundaries.
+* **Batch Conversion (`HEX_TO_ARRAY.bat`):** Placing the conversion script and the compiled hex file in the same directory, the raw Intel HEX strings are processed via the command line:
+```cmd
+HEX_TO_ARRAY.bat testled.hex out.h
+
+```
+
+
+* **C Array Integration (`out.h`):** The conversion script outputs a structured C array (`arr`), which is included by the bootloader project to flash the application binary sequentially into target memory at runtime.
+
+---
+
 ### **Lab 1:** In-Application Programming (IAP) Firmware Flashing & Jump on STM32F4 (Cortex-M4)
 Write an ARM Cortex-M4 (STM32F4) C bootloader program that erases target application flash memory at base address `0x08008000` (**Sector 2**), parses and flashes an array of 372 Intel HEX records (`out.h`), and branches execution to the user application.
 
