@@ -11,4 +11,11 @@
 
 #define SCAN_TIME	2.5
 
+/* Options
+ * DIRECT_LEDMATRIX
+ * S2P_CONNECTION
+ * */
+#define METHOD		S2P_CONNECTION
+
+
 #endif /* HAL_LEDMATRIX_LEDMATRIX_CFG_H_ */

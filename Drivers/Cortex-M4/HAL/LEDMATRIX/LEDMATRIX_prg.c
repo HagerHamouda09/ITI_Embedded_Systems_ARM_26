@@ -11,9 +11,12 @@
 #include "../../MCAL/GPIO/GPIO_int.h"
 #include "../../MCAL/SYSTICK/SYSTICK_int.h"
 
+#include "../S2P/S2P_int.h"
+
 #include "LEDMATRIX_int.h"
 #include "LEDMATRIX_prv.h"
 #include "LEDMATRIX_cfg.h"
+
 
 static void HLEDMATRIX_vEnableCurrentCol(u8 A_u8ColNo);
 static void HLEDMATRIX_DisableAllCol();
@@ -22,9 +25,22 @@ static void HLEDMATRIX_vSetRowValue(u8 A_u8rowValue);
 GPIOx_PinConfig_t *Rows;
 GPIOx_PinConfig_t *Cols;
 
+S2P_Init_t *S2P;
+
 u8 NO_ROWS;
 u8 NO_COLS;
 
+void HLEDMATRIX_vInit_S2P(S2P_Init_t* A_xInit)
+{
+	S2P = A_xInit;
+
+	HS2P_vInit(A_xInit);
+
+	/* Initialize Systick */
+	MSYSTIC_Config_t STK_cfg = {.InterruptEnable= INT_DISABLE ,.CLK_SRC = CLK_SRC_AHB_8};
+	MSYSTICK_vInit(& STK_cfg);
+
+}
 
 void HLEDMATRIX_vInit(GPIOx_PinConfig_t *A_xRows, u8 A_u8RowsNo ,GPIOx_PinConfig_t *A_xCols, u8 A_u8ColNo)
 {
@@ -60,17 +76,49 @@ void HLEDMATRIX_vDisplayFrame(u8 A_u8Frame[], u32 A_u32FrameDelay)
 
 	for(u8 i=0 ; i<NO_COLS; i++)
 	{
-	// set row value
-	HLEDMATRIX_vSetRowValue(A_u8Frame[i]);
-	// col enable
-	HLEDMATRIX_vEnableCurrentCol(i);
-	// calc delay
-	MSYSTICK_vSetDelay_ms(SCAN_TIME);
-	//disable cols
-	HLEDMATRIX_DisableAllCol();
+#if METHOD == DIRECT_LEDMATRIX
+			/* Set Row Value */
+			HLEDMATRIX_SetRowValue(A_u8Frame[i]);
+
+			/* Enable Current Col */
+			HLEDMATRIX_vEnableCurrentCol(i);
+
+			/* Calculated delay */
+			MSYSTICK_vSetDelay_ms(SCAN_TIME);
+
+			/* Disable All Cols */
+			HLEDMATRIX_vDisableAllCol();
+#endif
+
+#if METHOD == S2P_CONNECTION
+//	u8 arr[8] = {0x00, 0x02, 0x03, 0xB1, 0xB9, 0x0F, 0x06, 0x00};
+// frame[0] = 0x00
+			u8 RowData = A_u8Frame[i];
+
+			//11111111
+			        u8 ColData = 0xFF;
+			// i = 0
+			//11111110
+			        CLR_BIT(ColData, i);
+
+			        u32 S2P_Data = ((u32)RowData << 8) | ColData;
+
+			        /* Disable outputs */
+			        MGPIO_vSetPinValue(S2P->OEPort, S2P->OEPin, GPIO_HIGH);
+
+			        /* Shift + latch */
+			        HS2P_vSendData(S2P, S2P_Data);
+
+			        /* Enable outputs */
+			        MGPIO_vSetPinValue(S2P->OEPort, S2P->OEPin, GPIO_LOW);
+
+			        /* Display current column */
+			        MSYSTICK_vSetDelay_ms(SCAN_TIME);
+#endif
 	}
 	}
 }
+
 
 static void HLEDMATRIX_vEnableCurrentCol(u8 A_u8ColNo)
 {
